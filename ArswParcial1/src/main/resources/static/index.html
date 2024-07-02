@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form Example</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Mercado</h1>
+        <form action="/mercado">
+            <label for="function">Elige un mercado:</label>
+            <select id="function" name="function">
+              <option value="TIME_SERIES_INTRADAY">INTRADAY</option>
+              <option value="TIME_SERIES_DAILY">DAILY</option>
+              <option value="TIME_SERIES_MONTHLY">MONTHLY</option>
+              <option value="TIME_SERIES_WEEKLY">WEEKLY</option>
+            </select>
+            <label for="interval">Elige un intervalo:</label>
+            <select id="interval" name="interval">
+              <option value="1min">1min</option>
+              <option value="15min">15min</option>
+              <option value="30min">30min</option>
+              <option value="60min">60min</option>
+            </select>
+            <div>
+                <label for="empresa">Empresa:</label><br>
+                <input type="text" id="symbol" name="symbol" value="symbol"><br>
+            </div>
+            <input type="button" value="summit" onclick="loadGetMsg()">
+        </form>
+    </body>
+    </html>
+        <div id="getrespmsg"></div>
+
+        <script>
+            function loadGetMsg() {
+                let nameVarTemporal = document.getElementById("function").value;
+                let nameVarEmpresa = document.getElementById("symbol").value;
+                let nameVarIntervalo = document.getElementById("interval").value;
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function() {
+                    document.getElementById("getrespmsg").innerHTML =
+                    this.responseText;
+                }
+                xhttp.open("GET", "/mercado?function="+nameVarTemporal + "&symbol=" +nameVarEmpresa + "&interval=" + nameVarIntervalo);
+                xhttp.send();
+            }
+        </script>
+    </body>
+</html>
